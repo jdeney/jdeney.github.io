@@ -7,12 +7,12 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
+            background-color: #e0e0e0;
             color: #333;
+            padding: 50px;
+            text-align: left; /* Altera para alinhamento à esquerda */
         }
+
         .container {
             width: 80%;
             margin: auto;
@@ -21,8 +21,9 @@
             background: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             margin-top: 20px;
+            text-align: left; /* Altera para alinhamento à esquerda */
         }
-        h1, h2 {
+        h1, h2, h3 {
             text-align: center;
             color: #333;
         }
@@ -34,6 +35,20 @@
         }
         code {
             font-family: Consolas, "Courier New", monospace;
+        }
+        table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+            text-align: left;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
         }
     </style>
 </head>
@@ -145,8 +160,8 @@ curl  -X POST \
             <li>
                 Enviando um arquivo para processar em lote:
                 <ol>
-                    <li>Copie o arquivo para o docker:
-                        <pre><code>docker cp /home/d2dna/Dropbox/Pos_Doc/Empresa_D2DNA/github/dataset_simulated_einstein_207k.tsv med_blast:/tmp</code></pre>
+                    <li>Copie o arquivo para o docker (altere o path do seu arquivo):
+                        <pre><code>docker cp /path-to-file/dataset_simulated_einstein_207k.tsv med_blast:/tmp</code></pre>
                     </li>
                     <li>Execute a partir do docker:
                         <pre><code>docker exec -it med_blast python scripts/med_blast_batch.py -d /tmp/dataset_simulated_einstein_207k.tsv -batch 10000 -token seu_token</code></pre>
@@ -176,6 +191,73 @@ docker restart med_blast
                 </code></pre>
             </li>
         </ol>
+        <h2>Exemplo de Formato do Arquivo</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>id_trauma_vitima</th>
+                    <th>name</th>
+                    <th>date_birth</th>
+                    <th>sex</th>
+                    <th>mother</th>
+                    <th>cpf</th>
+                    <th>cns</th>
+                    <th>origem</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>cfb48c26-9930-11ee-9b7d-c4d0e3f817c2</td>
+                    <td>Welington Pereira da Costa</td>
+                    <td>1985-06-24</td>
+                    <td>1</td>
+                    <td>Fabiola Souza Pereira</td>
+                    <td>90643385070</td>
+                    <td></td>
+                    <td>3</td>
+                </tr>
+                <tr>
+                    <td>d2e69146-9930-11ee-b924-c4d0e3f817c2</td>
+                    <td>Edinaldo Almeida Quaresma</td>
+                    <td>1914-07-20</td>
+                    <td>1</td>
+                    <td>Daiana Rocha Almeida</td>
+                    <td></td>
+                    <td>199238096880008</td>
+                    <td>2</td>
+                </tr>
+                <tr>
+                    <td>d26813ca-9930-11ee-9aaa-c4d0e3f817c2</td>
+                    <td>Claudiane Peixoto Monteiro</td>
+                    <td>1923-03-20</td>
+                    <td>0</td>
+                    <td>Luzia Peixoto Peixoto</td>
+                    <td></td>
+                    <td></td>
+                    <td>3</td>
+                </tr>
+                <tr>
+                    <td>d2f21b9c-9930-11ee-b924-c4d0e3f817c2</td>
+                    <td>Aguinaldo Camilo</td>
+                    <td>1940-03-22</td>
+                    <td>1</td>
+                    <td>Helena Córdoba Camilo</td>
+                    <td></td>
+                    <td>207641956210002</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>cf22b4a4-9930-11ee-9b7d-c4d0e3f817c2</td>
+                    <td>Jurema Castro da Mota Ribeiro</td>
+                    <td>2005-06-01</td>
+                    <td>0</td>
+                    <td>Vera Ribeiro Córdoba da Mota</td>
+                    <td>92363737202</td>
+                    <td></td>
+                    <td>3</td>
+                </tr>
+            </tbody>
+        </table>
         
         <h2>FAQ</h2>
         <p>O sistema está usando alguma porta do banco com processo zumbi? Use os comandos abaixo para identificar o processo zumbi e usar <code>kill</code> para finalizar:</p>
