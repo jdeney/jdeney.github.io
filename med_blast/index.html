@@ -163,8 +163,8 @@ curl  -X POST \
                     <li>Copie o arquivo para o docker (altere o path do seu arquivo):
                         <pre><code>docker cp /path-to-file/dataset_simulated_einstein_207k.tsv med_blast:/tmp</code></pre>
                     </li>
-                    <li>Execute a partir do docker:
-                        <pre><code>docker exec -it med_blast python scripts/med_blast_batch.py -d /tmp/dataset_simulated_einstein_207k.tsv -batch 10000 -token seu_token</code></pre>
+                    <li>Execute a partir do docker (altere "seu_token", obtido no login):
+                        <pre><code>docker exec -it med_blast python scripts/med_blast_batch.py -d /tmp/dataset_simulated_einstein_207k.tsv -batch 10000 -token <i>seu_token</i></code></pre>
                     </li>
                 </ol>
             </li>
