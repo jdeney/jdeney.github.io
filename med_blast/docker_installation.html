@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial de Instalação e Configuração do Docker</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="static/js/scripts.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Tutorial de Instalação <br> do Docker no Ubuntu 22.04</h1>
+        <hr>
+        <br>
+        <ol>
+            <li>
+                Antes de mais nada, verifique se você já possui o Docker instalado. Caso tenha, retorne a <a href="index.html">página anterior</a>:
+                <pre><code class="copy-icon-container">docker version <span class="copy-icon" onclick="copyToClipboard('docker version')"><i class="fas fa-copy"></i></span></code></pre>
+                
+            </li>
+            <li>
+                Certifique-se de que não existe nenhuma versão antiga instalada removendo-a:
+                <pre><code class="copy-icon-container">sudo apt-get remove docker docker-engine docker.io containerd runc <span class="copy-icon" onclick="copyToClipboard('sudo apt-get remove docker docker-engine docker.io containerd runc')"><i class="fas fa-copy"></i></span></code></pre>
+            </li>
+            <li>
+                Atualize o repositório:
+                <pre><code class="copy-icon-container">sudo apt-get update <span class="copy-icon" onclick="copyToClipboard('sudo apt-get update')"><i class="fas fa-copy"></i></span></code></pre>
+            </li>
+            <li>
+                Instale pacotes necessários:
+                <pre><code class="copy-icon-container">sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common -y <span class="copy-icon" onclick="copyToClipboard('sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common -y')"><i class="fas fa-copy"></i></span></code></pre>
+            </li>
+            <li>
+                Adicione a chave oficial do Docker:
+                <pre><code class="copy-icon-container">curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - <span class="copy-icon" onclick="copyToClipboard('curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -')"><i class="fas fa-copy"></i></span></code></pre>
+            </li>
+            <li>
+                Verifique se a chave foi adicionada:
+                <pre><code class="copy-icon-container">sudo apt-key fingerprint 0EBFCD88 <span class="copy-icon" onclick="copyToClipboard('sudo apt-key fingerprint 0EBFCD88')"><i class="fas fa-copy"></i></span></code></pre>
+            </li>
+            <li>
+                Adicione o repositório do Docker:
+                <pre><code class="copy-icon-container">sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" <span class="copy-icon" onclick="copyToClipboard('sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"')"><i class="fas fa-copy"></i></span></code></pre>
+            </li>
+            <li>
+                Instale o Docker:
+                <pre><code class="copy-icon-container">sudo apt-get install docker-ce docker-ce-cli containerd.io -y <span class="copy-icon" onclick="copyToClipboard('sudo apt-get install docker-ce docker-ce-cli containerd.io -y')"><i class="fas fa-copy"></i></span></code></pre>
+            </li>
+            <li>
+                Verifique se o Docker foi corretamente instalado executando no terminal:
+                <pre><code class="copy-icon-container">docker version <span class="copy-icon" onclick="copyToClipboard('docker version')"><i class="fas fa-copy"></i></span></code></pre>
+            </li>
+            <li>
+                Adicione o seu usuário ao grupo do Docker:
+                <pre><code class="copy-icon-container">sudo usermod -aG docker $USER <span class="copy-icon" onclick="copyToClipboard('sudo usermod -aG docker $USER')"><i class="fas fa-copy"></i></span></code></pre>
+                <p>--> REINICIE O TERMINAL</p>
+            </li>
+            <li>
+                Teste a instalação executando o Hello World no terminal:
+                <pre><code class="copy-icon-container">docker run hello-world <span class="copy-icon" onclick="copyToClipboard('docker run hello-world')"><i class="fas fa-copy"></i></span></code></pre>
+            </li>
+        </ol>
+        <div class="copy-message" id="copy-message">Copiado para a área de transferência!</div>
+    </div>
+    
+    <div class="footer">
+        <div class="footer-content">
+            <p>© 2024 | Todos os Direitos Reservados.</p>
+            <a href="#politica-privacidade">Política de Privacidade</a>
+            <a href="#protecao-dados">Proteção de dados</a>
+            <div class="footer-logo">
+                <a href="https://www.d2dna.com" target="_blank">
+                    <img src="static/img/logo_d2dna.png" alt="Logo" />
+                </a>
+            </div>    
+        </div>
+    </div>
+    
+</body>
+</html>
