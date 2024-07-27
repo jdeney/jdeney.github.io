@@ -128,3 +128,16 @@ th {
     margin-left: 10px;
     text-align: right;
 }
+
+.custom-logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--text-color);
+    text-align: center;
+    margin: 20px 0;
+  }
+  
+  .custom-logo img {
+    max-width: 150px;
+    margin-bottom: 10px;
+  }

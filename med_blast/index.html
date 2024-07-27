@@ -10,6 +10,9 @@
 </head>
 <body>
     <div class="container">
+        <div class="custom-logo">
+            <img src="/med_blast/static/img/logo_d2dna.png" alt="Logo" />
+        </div>
         <h1>Carregar e Executar o <br> Med-Blast com Docker</h1>
         <hr>
         <br>
@@ -18,11 +21,14 @@
             <li>
                 Configure o arquivo <code>.env</code> com suas informações:
                 <pre><code class="copy-icon-container">
-    POSTGRES_USER=postgres_user
-    POSTGRES_PASSWORD=password_key
-    POSTGRES_DB=api_med_blast
-    JWT_SECRET=secret_key
-    POSTGRES_HOST=db
+POSTGRES_USER=seu_user #change this
+POSTGRES_PASSWORD=sua_senha #change this
+POSTGRES_HOST_PORT=5433
+POSTGRES_DB=api_med_blast
+POSTGRES_HOST=db
+WORKERS=4 # workers for gunicorn
+JWT_SECRET=sua_jwt_key #change this
+MASTER_KEY="sua_master_key" #change this
                     <span class="copy-icon" onclick="copyToClipboard('POSTGRES_USER=postgres_user\nPOSTGRES_PASSWORD=password_key\nPOSTGRES_DB=api_med_blast\nJWT_SECRET=secret_key\nPOSTGRES_HOST=db')"><i class="fas fa-copy"></i></span>
                     </code></pre>
             </li>
@@ -36,7 +42,7 @@
             </li>
             <li>
                 Execute o sistema:
-                <pre><code class="copy-icon-container">docker-compose -f med_blast.yml up -d <span class="copy-icon" onclick="copyToClipboard('docker-compose -f med_blast.yml up -d')"><i class="fas fa-copy"></i></span></code></pre>
+                <pre><code class="copy-icon-container">docker compose -f med_blast.yml up -d <span class="copy-icon" onclick="copyToClipboard('docker-compose -f med_blast.yml up -d')"><i class="fas fa-copy"></i></span></code></pre>
             </li>
             <li>
                 Verifique se os containers estão em execução:
@@ -51,45 +57,42 @@
                 <pre><code class="copy-icon-container">docker exec -it med_blast python reset_sistema.py <span class="copy-icon" onclick="copyToClipboard('docker exec -it med_blast python reset_sistema.py')"><i class="fas fa-copy"></i></span></code></pre>
             </li>
             <li>
-                Crie o primeiro usuário. Você pode utilizar cURL ou qualquer outra forma de POST:
+                Crie o primeiro usuário. Você pode utilizar utilizar diretamente o Swagger: http://127.0.0.1:8000/docs, ou utlizar linha de comando, como cURL ou qualquer outra forma de POST:
                 <pre><code>
-curl  -X POST \
-  'http://127.0.0.1:8080/api/v1/usuarios/signup' \
-  --header 'Accept: */*' \
-  --header 'User-Agent: Thunder Client (https://www.thunderclient.com)' \
-  --header 'Content-Type: application/json' \
-  --data-raw '{
-  "nome":"Nome Usuario",
-  "email":"email@xxx.com",
-  "senha":"sua_senha",
-  "admin": true
+curl --location 'http://127.0.0.1:8080/api/v1/usuarios/signup' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "nome":"Nome Usuario",
+    "email":"email@xxx.com",
+    "senha":"sua_senha",
+    "admin": true,
+    "master_key": "sua_master_key"
 }'
                 </code></pre>
+                <p>Obs: --> Sua master_key foi definida no .env</p>
             </li>
             <li>
                 Enviando um arquivo para processar em lote:
                 <ol>
                     <li>Copie o arquivo para o docker (altere o path do seu arquivo):
-                        <pre><code class="copy-icon-container">docker cp /path-to-file/dataset_simulated.tsv med_blast:/tmp <span class="copy-icon" onclick="copyToClipboard('docker cp /path-to-file/dataset_simulated.tsv med_blast:/tmp')"><i class="fas fa-copy"></i></span></code></pre>
+                        <pre><code class="copy-icon-container">docker cp /path-to-file/dataset_simulated_100k.tsv med_blast:/tmp <span class="copy-icon" onclick="copyToClipboard('docker cp /path-to-file/dataset_simulated.tsv med_blast:/tmp')"><i class="fas fa-copy"></i></span></code></pre>
                     </li>
                     <li>Execute a partir do docker (altere "seu_token", obtido no login):
-                        <p>*10000 -> tamnho do batch. Pode variar de 1000 à 15000</p>
-                        <pre><code class="copy-icon-container">docker exec -it med_blast python scripts/med_blast_batch.py -d /tmp/dataset_simulated.tsv -batch 10000 -token <span class="copy-icon" onclick="copyToClipboard('docker exec -it med_blast python scripts/med_blast_batch.py -d /tmp/dataset_simulated.tsv -batch 10000 -token')"><i class="fas fa-copy"></i></span></code></pre>
+                        <pre><code class="copy-icon-container">docker exec -it med_blast python scripts/send_data_medblast.py -d /tmp/dataset_simulated_100k.tsv -token seu_token <span class="copy-icon" onclick="copyToClipboard('docker exec -it med_blast python scripts/med_blast_batch.py -d /tmp/dataset_simulated.tsv -batch 10000 -token')"><i class="fas fa-copy"></i></span></code></pre>
                     </li>
                 </ol>
             </li>
             <li>
-                Logs gerados durante o processamento em lote:
+                Log gerado durante o processamento da api:
                 <ul>
-                    <li><code>filename_error.log</code></li>
-                    <li><code>filename_success.log</code></li>
+                    <li><code>filename_processed.log</code></li>
                 </ul>
+                <br>
             </li>
             <li>
                 Para ver os logs, execute:
                 <pre><code>
-docker exec -it med_blast cat /tmp/dataset_simulated_error.log
-docker exec -it med_blast cat /tmp/dataset_simulated_success.log
+docker exec -it med_blast cat /tmp/dataset_simulated_100k_processed.log > processed.log
                 </code></pre>
             </li>
             <li>
