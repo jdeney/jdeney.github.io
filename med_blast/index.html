@@ -1,26 +1,37 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Carregar e Executar o Med-Blast com Docker</title>
-    <link rel="stylesheet" href="static/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="static/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
     <script src="static/js/scripts.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <div class="custom-logo">
-            <img src="static/img/logo_d2dna.png" alt="Logo" />
-        </div>
-        <h1>Carregar e Executar o <br> Med-Blast com Docker</h1>
-        <hr>
-        <br>
-        <p>Caso você ainda não tenha o Docker instalado, siga o <a href="docker_installation.html">Tutorial de Instalação e Configuração do Docker</a>.</p>
-        <ol>
-            <li>
-                Configure o arquivo <code>.env</code> com suas informações:
-                <pre><code class="copy-icon-container">
+      <div class="custom-logo">
+        <img src="static/img/logo_d2dna.png" alt="Logo" />
+      </div>
+      <h1>
+        Carregar e Executar o <br />
+        Med-Blast com Docker
+      </h1>
+      <hr />
+      <br />
+      <p>
+        Caso você ainda não tenha o Docker instalado, siga o
+        <a href="docker_installation.html"
+          >Tutorial de Instalação e Configuração do Docker</a
+        >.
+      </p>
+      <ol>
+        <li>
+          Configure o arquivo <code>.env</code> com suas informações:
+          <pre><code class="copy-icon-container">
 POSTGRES_USER=seu_user #change this
 POSTGRES_PASSWORD=sua_senha #change this
 POSTGRES_HOST_PORT=5433
@@ -29,36 +40,40 @@ POSTGRES_HOST=db
 WORKERS=4 # workers for gunicorn
 JWT_SECRET=sua_jwt_key #change this
 MASTER_KEY="sua_master_key" #change this
-                    <span class="copy-icon" onclick="copyToClipboard('POSTGRES_USER=postgres_user\nPOSTGRES_PASSWORD=password_key\nPOSTGRES_DB=api_med_blast\nJWT_SECRET=secret_key\nPOSTGRES_HOST=db')"><i class="fas fa-copy"></i></span>
+<span class="copy-icon" onclick="copyToClipboard('POSTGRES_USER=seu_user\nPOSTGRES_PASSWORD=sua_senha\nPOSTGRES_HOST_PORT=5433\nPOSTGRES_DB=api_med_blast\nPOSTGRES_HOST=db\nWORKERS=4\nJWT_SECRET=sua_jwt_key\nMASTER_KEY=sua_master_key')">
+    <i class="fas fa-copy"></i></span>
                     </code></pre>
-            </li>
-            <li>
-                Carregue a imagem do Med-Blast:
-                <pre><code class="copy-icon-container">docker load -i med_blast_v0.5.tar <span class="copy-icon" onclick="copyToClipboard('docker load -i med_blast_v0.5.tar')"><i class="fas fa-copy"></i></span></code></pre>
-            </li>
-            <li>
-                Carregue o banco de dados:
-                <pre><code class="copy-icon-container">docker load -i postgres_v16.2.tar <span class="copy-icon" onclick="copyToClipboard('docker load -i postgres_v16.2.tar')"><i class="fas fa-copy"></i></span></code></pre>
-            </li>
-            <li>
-                Execute o sistema:
-                <pre><code class="copy-icon-container">docker compose -f med_blast.yml up -d <span class="copy-icon" onclick="copyToClipboard('docker-compose -f med_blast.yml up -d')"><i class="fas fa-copy"></i></span></code></pre>
-            </li>
-            <li>
-                Verifique se os containers estão em execução:
-                <pre><code class="copy-icon-container">docker ps <span class="copy-icon" onclick="copyToClipboard('docker ps')"><i class="fas fa-copy"></i></span></code></pre>
-            </li>
-            <li>
-                Verifique no seu navegador, você deve ser capaz de acessar a documentação Swagger:
-                <pre><code class="copy-icon-container">http://127.0.0.1:8080/docs <span class="copy-icon" onclick="copyToClipboard('http://127.0.0.1:8080/docs')"><i class="fas fa-copy"></i></span></code></pre>
-            </li>
-            <li>
-                Crie as tabelas no banco de dados:
-                <pre><code class="copy-icon-container">docker exec -it med_blast python reset_sistema.py <span class="copy-icon" onclick="copyToClipboard('docker exec -it med_blast python reset_sistema.py')"><i class="fas fa-copy"></i></span></code></pre>
-            </li>
-            <li>
-                Crie o primeiro usuário. Você pode utilizar utilizar diretamente o Swagger: http://127.0.0.1:8000/docs, ou utlizar linha de comando, como cURL ou qualquer outra forma de POST:
-                <pre><code>
+        </li>
+        <li>
+          Carregue a imagem do Med-Blast:
+          <pre><code class="copy-icon-container">docker load -i med_blast_v0.5.tar <span class="copy-icon" onclick="copyToClipboard('docker load -i med_blast_v0.5.tar')"><i class="fas fa-copy"></i></span></code></pre>
+        </li>
+        <li>
+          Carregue o banco de dados:
+          <pre><code class="copy-icon-container">docker load -i postgres_v16.2.tar <span class="copy-icon" onclick="copyToClipboard('docker load -i postgres_v16.2.tar')"><i class="fas fa-copy"></i></span></code></pre>
+        </li>
+        <li>
+          Execute o sistema:
+          <pre><code class="copy-icon-container">docker compose -f med_blast.yml up -d <span class="copy-icon" onclick="copyToClipboard('docker compose -f med_blast.yml up -d')"><i class="fas fa-copy"></i></span></code></pre>
+        </li>
+        <li>
+          Verifique se os containers estão em execução:
+          <pre><code class="copy-icon-container">docker ps <span class="copy-icon" onclick="copyToClipboard('docker ps')"><i class="fas fa-copy"></i></span></code></pre>
+        </li>
+        <li>
+          Verifique no seu navegador, você deve ser capaz de acessar a
+          documentação Swagger:
+          <pre><code class="copy-icon-container">http://127.0.0.1:8080/docs <span class="copy-icon" onclick="copyToClipboard('http://127.0.0.1:8080/docs')"><i class="fas fa-copy"></i></span></code></pre>
+        </li>
+        <li>
+          Crie as tabelas no banco de dados:
+          <pre><code class="copy-icon-container">docker exec -it med_blast python reset_sistema.py <span class="copy-icon" onclick="copyToClipboard('docker exec -it med_blast python reset_sistema.py')"><i class="fas fa-copy"></i></span></code></pre>
+        </li>
+        <li>
+          Crie o primeiro usuário. Você pode utilizar utilizar diretamente o
+          Swagger: http://127.0.0.1:8000/docs, ou utlizar linha de comando, como
+          cURL ou qualquer outra forma de POST:
+          <pre><code>
 curl --location 'http://127.0.0.1:8080/api/v1/usuarios/signup' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -69,138 +84,174 @@ curl --location 'http://127.0.0.1:8080/api/v1/usuarios/signup' \
     "master_key": "sua_master_key"
 }'
                 </code></pre>
-                <p>Obs: --> Sua master_key foi definida no .env</p>
+          <p>Obs: --> Sua master_key foi definida no .env</p>
+        </li>
+        <li>
+          O Endpoint principal da aplicação é o med_blast:
+          <pre><code>http://127.0.0.1:8000/api/v1/clientes/med_blast</code></pre>
+          <p>
+            Ele pode ser chamado de qualquer linguagem de programação. Veja a
+            documentação da API para detalhes
+          </p>
+        </li>
+        <li>
+          Caso precise enviar registros a partir de uma arquivo,
+          disponibilizamos um script em python que faz isso, veja:
+          <p>
+            Disponibilizamos um arquivo de exemplo:
+            dataset_simulated_100k.tsv<br />
+            Enviando um arquivo para processar
+            <i>(automação do endpont med_blast)</i>:
+          </p>
+          <ol>
+            <li>
+              Copie o seu arquivo para o docker (altere o path do seu arquivo):
+              <pre><code class="copy-icon-container">docker cp /path-to-file/dataset_simulated_100k.tsv med_blast:/tmp <span class="copy-icon" onclick="copyToClipboard('docker cp /path-to-file/dataset_simulated.tsv med_blast:/tmp')"><i class="fas fa-copy"></i></span></code></pre>
             </li>
             <li>
-                Enviando um arquivo para processar em lote:
-                <ol>
-                    <li>Copie o arquivo para o docker (altere o path do seu arquivo):
-                        <pre><code class="copy-icon-container">docker cp /path-to-file/dataset_simulated_100k.tsv med_blast:/tmp <span class="copy-icon" onclick="copyToClipboard('docker cp /path-to-file/dataset_simulated.tsv med_blast:/tmp')"><i class="fas fa-copy"></i></span></code></pre>
-                    </li>
-                    <li>Execute a partir do docker (altere "seu_token", obtido no login):
-                        <pre><code class="copy-icon-container">docker exec -it med_blast python scripts/send_data_medblast.py -d /tmp/dataset_simulated_100k.tsv -token seu_token <span class="copy-icon" onclick="copyToClipboard('docker exec -it med_blast python scripts/med_blast_batch.py -d /tmp/dataset_simulated.tsv -batch 10000 -token')"><i class="fas fa-copy"></i></span></code></pre>
-                    </li>
-                </ol>
+              Execute a partir do docker (altere "seu_token", obtido no login):
+              <pre><code class="copy-icon-container">docker exec -it med_blast python scripts/send_data_medblast.py -d /tmp/dataset_simulated_100k.tsv -token seu_token <span class="copy-icon" onclick="copyToClipboard('docker exec -it med_blast python scripts/med_blast_batch.py -d /tmp/dataset_simulated.tsv -batch 10000 -token')"><i class="fas fa-copy"></i></span></code></pre>
             </li>
-            <li>
-                Log gerado durante o processamento da api:
-                <ul>
-                    <li><code>filename_processed.log</code></li>
-                </ul>
-                <br>
-            </li>
-            <li>
-                Para ver os logs, execute:
-                <pre><code>
+          </ol>
+        </li>
+        <li>
+          Log gerado durante o processamento da api:
+          <p>
+            Todas as informações que você precisa saber, sobre cada requisição,
+            ficam slavas em um arquivo de logs que você pode acessar:
+          </p>
+          <ul>
+            <li><code>filename_processed.log</code></li>
+          </ul>
+          <br />
+          <p>
+            <b>Dica:</b> Cada endpoint pode responder a uma requisição em cada
+            chamada. O arquivo mencionado acima é utilizado apenas quando você
+            executa o script scripts/send_data_medblast.py. Todos os endpoints
+            estão preparados e documentados individualmente. Consulte a
+            documentação para mais detalhes.
+          </p>
+        </li>
+        <p>Para ver os logs, execute:</p>
+        <pre><code>
 docker exec -it med_blast cat /tmp/dataset_simulated_100k_processed.log > processed.log
                 </code></pre>
-            </li>
-            <li>
-                Comandos gerais de gerenciamento:
-                <pre><code>
+        <li>
+          Comandos gerais de gerenciamento:
+          <pre><code>
 docker ps
 docker logs med_blast
 docker restart med_blast
                 </code></pre>
-            </li>
-        </ol>
-        <div class="copy-message" id="copy-message">Copiado para a área de transferência!</div>
-        <h2>Exemplo de Formato do Arquivo</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>id</th>
-                    <th>name</th>
-                    <th>date_birth</th>
-                    <th>sex</th>
-                    <th>mother</th>
-                    <th>cpf</th>
-                    <th>cns</th>
-                    <th>origem</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>cfb48c26-9930-11ee-9b7d-c4d0e3f817c2</td>
-                    <td>Welington Pereira da Costa</td>
-                    <td>1985-06-24</td>
-                    <td>1</td>
-                    <td>Fabiola Souza Pereira</td>
-                    <td>90643385070</td>
-                    <td></td>
-                    <td>3</td>
-                </tr>
-                <tr>
-                    <td>d2e69146-9930-11ee-b924-c4d0e3f817c2</td>
-                    <td>Edinaldo Almeida Quaresma</td>
-                    <td>1914-07-20</td>
-                    <td>1</td>
-                    <td>Daiana Rocha Almeida</td>
-                    <td></td>
-                    <td>199238096880008</td>
-                    <td>2</td>
-                </tr>
-                <tr>
-                    <td>d26813ca-9930-11ee-9aaa-c4d0e3f817c2</td>
-                    <td>Claudiane Peixoto Monteiro</td>
-                    <td>1923-03-20</td>
-                    <td>0</td>
-                    <td>Luzia Peixoto Peixoto</td>
-                    <td></td>
-                    <td></td>
-                    <td>3</td>
-                </tr>
-                <tr>
-                    <td>d2f21b9c-9930-11ee-b924-c4d0e3f817c2</td>
-                    <td>Aguinaldo Camilo</td>
-                    <td>1940-03-22</td>
-                    <td>1</td>
-                    <td>Helena Córdoba Camilo</td>
-                    <td></td>
-                    <td>207641956210002</td>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <td>cf22b4a4-9930-11ee-9b7d-c4d0e3f817c2</td>
-                    <td>Jurema Castro da Mota Ribeiro</td>
-                    <td>2005-06-01</td>
-                    <td>0</td>
-                    <td>Vera Ribeiro Córdoba da Mota</td>
-                    <td>92363737202</td>
-                    <td></td>
-                    <td>3</td>
-                </tr>
-            </tbody>
-        </table>
-        
-        <h2>FAQ</h2>
-        <p>O sistema está usando alguma porta do banco com processo zumbi? Use os comandos abaixo para identificar o processo zumbi e usar <code>kill</code> para finalizar:</p>
-        <ol>
-            <li>Identificar o processo zumbi:
-                <pre><code>
+        </li>
+      </ol>
+      <div class="copy-message" id="copy-message">
+        Copiado para a área de transferência!
+      </div>
+      <h2>Exemplo de Formato do Arquivo</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>id</th>
+            <th>name</th>
+            <th>date_birth</th>
+            <th>sex</th>
+            <th>mother</th>
+            <th>cpf</th>
+            <th>cns</th>
+            <th>origem</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>cfb48c26-9930-11ee-9b7d-c4d0e3f817c2</td>
+            <td>Welington Pereira da Costa</td>
+            <td>1985-06-24</td>
+            <td>1</td>
+            <td>Fabiola Souza Pereira</td>
+            <td>90643385070</td>
+            <td></td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>d2e69146-9930-11ee-b924-c4d0e3f817c2</td>
+            <td>Edinaldo Almeida Quaresma</td>
+            <td>1914-07-20</td>
+            <td>1</td>
+            <td>Daiana Rocha Almeida</td>
+            <td></td>
+            <td>199238096880008</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>d26813ca-9930-11ee-9aaa-c4d0e3f817c2</td>
+            <td>Claudiane Peixoto Monteiro</td>
+            <td>1923-03-20</td>
+            <td>0</td>
+            <td>Luzia Peixoto Peixoto</td>
+            <td></td>
+            <td></td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>d2f21b9c-9930-11ee-b924-c4d0e3f817c2</td>
+            <td>Aguinaldo Camilo</td>
+            <td>1940-03-22</td>
+            <td>1</td>
+            <td>Helena Córdoba Camilo</td>
+            <td></td>
+            <td>207641956210002</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>cf22b4a4-9930-11ee-9b7d-c4d0e3f817c2</td>
+            <td>Jurema Castro da Mota Ribeiro</td>
+            <td>2005-06-01</td>
+            <td>0</td>
+            <td>Vera Ribeiro Córdoba da Mota</td>
+            <td>92363737202</td>
+            <td></td>
+            <td>3</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>FAQ</h2>
+      <p>
+        O sistema está usando alguma porta do banco com processo zumbi? Use os
+        comandos abaixo para identificar o processo zumbi e usar
+        <code>kill</code> para finalizar:
+      </p>
+      <ol>
+        <li>
+          Identificar o processo zumbi:
+          <pre><code>
 sudo ss -tulpn | grep 5433
 # ou
 sudo netstat -tulpn | grep 5433
                 </code></pre>
-            </li>
-            <li>Matar o processo:
-                <pre><code>sudo kill &lt;PID&gt;</code></pre>
-            </li>
-        </ol>
-        
+        </li>
+        <li>
+          Matar o processo:
+          <pre><code>sudo kill &lt;PID&gt;</code></pre>
+        </li>
+        <li>
+          Suporte e manutenção:
+          <pre><code>Para suporte e manutenção, entre em contato com <a href="mailto:deneyaraujo@d2dna.com">deneyaraujo@d2dna.com</a></code></pre>
+        </li>
+      </ol>
     </div>
     <div class="footer">
-        <div class="footer-content">
-            <p>© 2024 | Todos os Direitos Reservados.</p>
-            <a href="#politica-privacidade">Política de Privacidade</a>
-            <a href="#protecao-dados">Proteção de dados</a>
-            <div class="footer-logo">
-                <a href="https://www.d2dna.com" target="_blank">
-                    <img src="static/img/logo_d2dna.png" alt="Logo" />
-                </a>
-            </div>    
+      <div class="footer-content">
+        <p>© 2024 | Todos os Direitos Reservados.</p>
+        <a href="#politica-privacidade">Política de Privacidade</a>
+        <a href="#protecao-dados">Proteção de dados</a>
+        <div class="footer-logo">
+          <a href="https://www.d2dna.com" target="_blank">
+            <img src="static/img/logo_d2dna.png" alt="Logo" />
+          </a>
         </div>
+      </div>
     </div>
-
-</body>
+  </body>
 </html>
