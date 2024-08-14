@@ -1,0 +1,230 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 100vh;
+                 background-color: #FFFFFF;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"font": {"color": "black"}, "group": "ITpS", "id": "ITpS", "label": "ITpS", "shape": "dot", "title": "Total: 11369 | Equipe: 122"}, {"font": {"color": "black"}, "group": "P3", "id": "P3", "label": "P3", "shape": "box", "title": "Valor: 1000 | Equipe: 4"}, {"font": {"color": "black"}, "group": "P2", "id": "P2", "label": "P2", "shape": "box", "title": "Valor: 1586 | Equipe: 52"}, {"font": {"color": "black"}, "group": "P1", "id": "P1", "label": "P1", "shape": "box", "title": "Valor: 8783 | Equipe: 66"}, {"font": {"color": "black"}, "group": "P1", "id": "REVISA", "label": "REVISA", "shape": "box", "title": "Valor: 3956 | Equipe: 20"}, {"font": {"color": "black"}, "group": "P1", "id": "Centros Sentinelas", "label": "Centros Sentinelas", "shape": "dot", "title": "Valor: 1900 | Equipe: 10"}, {"font": {"color": "black"}, "group": "P1", "id": "Sorologia: banco de sangue", "label": "Sorologia: banco de sangue", "shape": "dot", "title": "Valor: 856 | Equipe: 8"}, {"font": {"color": "black"}, "group": "P1", "id": "Sequenciamento: Dengue", "label": "Sequenciamento: Dengue", "shape": "dot", "title": "Valor: 1200 | Equipe: 2"}, {"font": {"color": "black"}, "group": "P1", "id": "Sa\u00fade \u00danica", "label": "Sa\u00fade \u00danica", "shape": "box", "title": "Valor: 993 | Equipe: 17"}, {"font": {"color": "black"}, "group": "P1", "id": "Projeto Vivera", "label": "Projeto Vivera", "shape": "dot", "title": "Valor: 500 | Equipe: 6"}, {"font": {"color": "black"}, "group": "P1", "id": "Biorreposit\u00f3rio Nacional", "label": "Biorreposit\u00f3rio Nacional", "shape": "dot", "title": "Valor: 250 | Equipe: 9"}, {"font": {"color": "black"}, "group": "P1", "id": "Detec\u00e7\u00e3o de v\u00edrus: aves e pen\u00edpedes (aprovar)", "label": "Detec\u00e7\u00e3o de v\u00edrus: aves e pen\u00edpedes (aprovar)", "shape": "dot", "title": "Valor: 243 | Equipe: 2"}, {"font": {"color": "black"}, "group": "P1", "id": "CPCD-BR", "label": "CPCD-BR", "shape": "box", "title": "Valor: 837 | Equipe: 3"}, {"font": {"color": "black"}, "group": "P2", "id": "Monitoramento de pat\u00f3genos", "label": "Monitoramento de pat\u00f3genos", "shape": "box", "title": "Valor: 620 | Equipe: 10"}, {"font": {"color": "black"}, "group": "P2", "id": "SAVEd", "label": "SAVEd", "shape": "box", "title": "Valor: 966 | Equipe: 42"}, {"font": {"color": "black"}, "group": "P2", "id": "Vigil\u00e2ncia Rumores de surtos", "label": "Vigil\u00e2ncia Rumores de surtos", "shape": "dot", "title": "Valor: 250 | Equipe: 12"}, {"font": {"color": "black"}, "group": "P2", "id": "Vigil\u00e2ncia Sindr\u00f4mica", "label": "Vigil\u00e2ncia Sindr\u00f4mica", "shape": "dot", "title": "Valor: 266 | Equipe: 13"}, {"font": {"color": "black"}, "group": "P2", "id": "Intelig\u00eancias Artificiais", "label": "Intelig\u00eancias Artificiais", "shape": "dot", "title": "Valor: 250 | Equipe: 10"}, {"font": {"color": "black"}, "group": "P2", "id": "Potencial epid\u00eamico EstimPatbr (aprovar)", "label": "Potencial epid\u00eamico EstimPatbr (aprovar)", "shape": "dot", "title": "Valor: 200 | Equipe: 7"}, {"font": {"color": "black"}, "group": "P3", "id": "Cursos e Mini-cursos", "label": "Cursos e Mini-cursos", "shape": "box", "title": "Valor: 1000 | Equipe: 4"}, {"font": {"color": "black"}, "group": "P1", "id": "OPAS", "label": "OPAS", "shape": "box", "title": "Valor: 2997 | Equipe: 26"}, {"font": {"color": "black"}, "group": "P1", "id": "Planos de Contig\u00eancia", "label": "Planos de Contig\u00eancia", "shape": "dot", "title": "Valor: 1200 | Equipe: 2"}, {"font": {"color": "black"}, "group": "P1", "id": "Vigil\u00e2ncia Intersetorial", "label": "Vigil\u00e2ncia Intersetorial", "shape": "dot", "title": "Valor: 250 | Equipe: 2"}, {"font": {"color": "black"}, "group": "P1", "id": "Metagen\u00f4mica de morcegos", "label": "Metagen\u00f4mica de morcegos", "shape": "dot", "title": "Valor: 500 | Equipe: 3"}, {"font": {"color": "black"}, "group": "P1", "id": "Vigil\u00e2ncia Ambiental/Esgoto", "label": "Vigil\u00e2ncia Ambiental/Esgoto", "shape": "dot", "title": "Valor: 675 | Equipe: 2"}, {"font": {"color": "black"}, "group": "P1", "id": "Intelig\u00eancia Epidemiol\u00f3gica", "label": "Intelig\u00eancia Epidemiol\u00f3gica", "shape": "dot", "title": "Valor: 372 | Equipe: 17"}]);
+                  edges = new vis.DataSet([{"from": "ITpS", "to": "P3"}, {"from": "ITpS", "to": "P2"}, {"from": "ITpS", "to": "P1"}, {"from": "P3", "to": "Cursos e Mini-cursos"}, {"from": "P2", "to": "Monitoramento de pat\u00f3genos"}, {"from": "P2", "to": "SAVEd"}, {"from": "P1", "to": "REVISA"}, {"from": "P1", "to": "Sa\u00fade \u00danica"}, {"from": "P1", "to": "CPCD-BR"}, {"from": "P1", "to": "OPAS"}, {"from": "REVISA", "to": "Centros Sentinelas"}, {"from": "REVISA", "to": "Sorologia: banco de sangue"}, {"from": "REVISA", "to": "Sequenciamento: Dengue"}, {"from": "Sa\u00fade \u00danica", "to": "Projeto Vivera"}, {"from": "Sa\u00fade \u00danica", "to": "Biorreposit\u00f3rio Nacional"}, {"from": "Sa\u00fade \u00danica", "to": "Detec\u00e7\u00e3o de v\u00edrus: aves e pen\u00edpedes (aprovar)"}, {"from": "SAVEd", "to": "Vigil\u00e2ncia Rumores de surtos"}, {"from": "SAVEd", "to": "Vigil\u00e2ncia Sindr\u00f4mica"}, {"from": "SAVEd", "to": "Intelig\u00eancias Artificiais"}, {"from": "SAVEd", "to": "Potencial epid\u00eamico EstimPatbr (aprovar)"}, {"from": "OPAS", "to": "Planos de Contig\u00eancia"}, {"from": "OPAS", "to": "Vigil\u00e2ncia Intersetorial"}, {"from": "OPAS", "to": "Metagen\u00f4mica de morcegos"}, {"from": "OPAS", "to": "Vigil\u00e2ncia Ambiental/Esgoto"}, {"from": "OPAS", "to": "Intelig\u00eancia Epidemiol\u00f3gica"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    
+<div style="position: absolute; top: 10px; left: 10px; z-index: 1000; background-color: white; padding: 10px; border-radius: 5px;">
+    <input type="text" id="searchCode" placeholder="Enter code..." style="margin-right: 10px;">
+    <button onclick="highlightNode()" style="margin-right: 10px;">Search</button>
+    <button onclick="resetHighlight()">Reset</button>
+    <select id="sizeSelector" onchange="adjustNodeSizes()" style="margin-left: 20px;">
+        <option value="" disabled selected>Select size</option>
+        <option value="valor">Valor</option>
+        <option value="n_equipe">Equipe</option>
+    </select>
+</div>
+<script type="text/javascript">
+    var pilarColors = {"P1": "#ef7e78", "P2": "#73a2d6", "P3": "#DFEAF3", "ITpS": "#FFA07A"};
+
+    var sizeByValor = {'REVISA': 48.0, 'Centros Sentinelas': 76.0, 'Sorologia: banco de sangue': 34.24, 'Sequenciamento: Dengue': 48.0, 'Saúde Única': 9.72, 'Projeto Vivera': 20.0, 'Biorrepositório Nacional': 10.0, 'Detecção de vírus: aves e penípedes (aprovar)': 9.72, 'CPCD-BR': 33.48, 'Monitoramento de patógenos': 24.8, 'SAVEd': 8.0, 'Vigilância Rumores de surtos': 10.0, 'Vigilância Sindrômica': 10.64, 'Inteligências Artificiais': 10.0, 'Potencial epidêmico EstimPatbr (aprovar)': 8.0, 'Cursos e Mini-cursos': 40.0, 'OPAS': 14.88, 'Planos de Contigência': 48.0, 'Vigilância Intersetorial': 10.0, 'Metagenômica de morcegos': 20.0, 'Vigilância Ambiental/Esgoto': 27.0, 'Inteligência Epidemiológica': 14.88};
+    var sizeByNequipe = {'REVISA': 10, 'Centros Sentinelas': 50, 'Sorologia: banco de sangue': 40, 'Sequenciamento: Dengue': 10, 'Saúde Única': 10, 'Projeto Vivera': 30, 'Biorrepositório Nacional': 45, 'Detecção de vírus: aves e penípedes (aprovar)': 10, 'CPCD-BR': 15, 'Monitoramento de patógenos': 50, 'SAVEd': 35, 'Vigilância Rumores de surtos': 60, 'Vigilância Sindrômica': 65, 'Inteligências Artificiais': 50, 'Potencial epidêmico EstimPatbr (aprovar)': 35, 'Cursos e Mini-cursos': 20, 'OPAS': 85, 'Planos de Contigência': 10, 'Vigilância Intersetorial': 10, 'Metagenômica de morcegos': 15, 'Vigilância Ambiental/Esgoto': 10, 'Inteligência Epidemiológica': 85};
+    var tooltipInfo = {'Centros Sentinelas': 'Valor: 1900 | Equipe: 10', 'Sorologia: banco de sangue': 'Valor: 856 | Equipe: 8', 'Sequenciamento: Dengue': 'Valor: 1200 | Equipe: 2', 'Projeto Vivera': 'Valor: 500 | Equipe: 6', 'Biorrepositório Nacional': 'Valor: 250 | Equipe: 9', 'Detecção de vírus: aves e penípedes (aprovar)': 'Valor: 243 | Equipe: 2', 'Vigilância Rumores de surtos': 'Valor: 250 | Equipe: 12', 'Vigilância Sindrômica': 'Valor: 266 | Equipe: 13', 'Inteligências Artificiais': 'Valor: 250 | Equipe: 10', 'Potencial epidêmico EstimPatbr (aprovar)': 'Valor: 200 | Equipe: 7', 'Planos de Contigência': 'Valor: 1200 | Equipe: 2', 'Vigilância Intersetorial': 'Valor: 250 | Equipe: 2', 'Metagenômica de morcegos': 'Valor: 500 | Equipe: 3', 'Vigilância Ambiental/Esgoto': 'Valor: 675 | Equipe: 2', 'Inteligência Epidemiológica': 'Valor: 372 | Equipe: 17', 'REVISA': 'Valor: 3956 | Equipe: 20', 'Saúde Única': 'Valor: 993 | Equipe: 17', 'CPCD-BR': 'Valor: 837 | Equipe: 3', 'Monitoramento de patógenos': 'Valor: 620 | Equipe: 10', 'SAVEd': 'Valor: 966 | Equipe: 42', 'Cursos e Mini-cursos': 'Valor: 1000 | Equipe: 4', 'OPAS': 'Valor: 2997 | Equipe: 26', 'P1': 'Valor: 8783 | Equipe: 66', 'P2': 'Valor: 1586 | Equipe: 52', 'P3': 'Valor: 1000 | Equipe: 4', 'ITpS': 'Total: 11369 | Equipe: 122'};
+
+    function adjustNodeSizes() {
+        var selectedOption = document.getElementById('sizeSelector').value;
+        var nodes = network.body.data.nodes.get();  // Get all nodes
+
+        nodes.forEach(node => {
+            var nodeSize = 25;  // Default size
+            var titleText = node.title;  // Default to existing title
+            if (selectedOption === "valor") {
+                nodeSize = sizeByValor[node.label] || 25;
+                if (tooltipInfo[node.label]) {
+                    titleText = tooltipInfo[node.label];
+                }
+            } else if (selectedOption === "n_equipe") {
+                nodeSize = sizeByNequipe[node.label] || 25;
+                if (tooltipInfo[node.label]) {
+                    titleText = tooltipInfo[node.label];
+                }
+            }
+            // Preserve the original color while updating the size and title (tooltip)
+            var currentColor = node.color.background || pilarColors[node.group] || '#ADD8E6';
+            network.body.data.nodes.update({id: node.id, size: nodeSize, color: currentColor, title: titleText});
+        });
+    }
+
+    function highlightNode() {
+        var inputCode = document.getElementById('searchCode').value.toUpperCase();  // Convert input to uppercase for case insensitive match
+        var nodes = network.body.data.nodes.get();  // Get all nodes
+
+        // Highlight nodes that match the input code in their ID or title and grey out non-matching nodes
+        nodes.forEach(node => {
+            if (node.label.includes(inputCode) || (node.title && node.title.includes(inputCode))) {
+                network.body.data.nodes.update({id: node.id, color: '#FFA07A'});
+            } else {
+                network.body.data.nodes.update({id: node.id, color: '#E6E6FA'});  // Grey out non-matching nodes
+            }
+        });
+    }
+
+    function resetHighlight() {
+        var nodes = network.body.data.nodes.get();  // Get all nodes
+
+        // Restore original color and size for each node, reset title (tooltip) for projects
+        nodes.forEach(node => {
+            var originalColor = pilarColors[node.group] || '#ADD8E6';
+            var resetTitle = tooltipInfo[node.label] || "";
+            network.body.data.nodes.update({id: node.id, color: originalColor, size: 25, title: resetTitle});
+        });
+
+        document.getElementById('searchCode').value = '';  // Clear the search input
+        document.getElementById('sizeSelector').selectedIndex = 0;  // Reset size selector
+    }
+
+    // Apply initial colors on page load
+    window.onload = function() {
+        resetHighlight();
+    };
+</script>
+</body>
+</html>
