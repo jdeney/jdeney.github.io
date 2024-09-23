@@ -46,7 +46,7 @@ MASTER_KEY="sua_master_key" #change this
         </li>
         <li>
           Carregue a imagem do Med-Blast:
-          <pre><code class="copy-icon-container">docker load -i med_blast_v0.5.tar <span class="copy-icon" onclick="copyToClipboard('docker load -i med_blast_v0.5.tar')"><i class="fas fa-copy"></i></span></code></pre>
+          <pre><code class="copy-icon-container">docker load -i med_blast_v0.6.tar <span class="copy-icon" onclick="copyToClipboard('docker load -i med_blast_v0.6.tar')"><i class="fas fa-copy"></i></span></code></pre>
         </li>
         <li>
           Carregue o banco de dados:
@@ -99,18 +99,18 @@ curl --location 'http://127.0.0.1:8080/api/v1/usuarios/signup' \
           disponibilizamos um script em python que faz isso, veja:
           <p>
             Disponibilizamos um arquivo de exemplo:
-            dataset_simulated_100k.tsv<br />
+            dataset_simulated_10k.tsv<br />
             Enviando um arquivo para processar
             <i>(automação do endpont med_blast)</i>:
           </p>
           <ol>
             <li>
               Copie o seu arquivo para o docker (altere o path do seu arquivo):
-              <pre><code class="copy-icon-container">docker cp /path-to-file/dataset_simulated_100k.tsv med_blast:/tmp <span class="copy-icon" onclick="copyToClipboard('docker cp /path-to-file/dataset_simulated.tsv med_blast:/tmp')"><i class="fas fa-copy"></i></span></code></pre>
+              <pre><code class="copy-icon-container">docker cp /path-to-file/dataset_simulated_10k.tsv med_blast:/tmp <span class="copy-icon" onclick="copyToClipboard('docker cp /path-to-file/dataset_simulated_10k.tsv med_blast:/tmp')"><i class="fas fa-copy"></i></span></code></pre>
             </li>
             <li>
               Execute a partir do docker (altere "seu_token", obtido no login):
-              <pre><code class="copy-icon-container">docker exec -it med_blast python scripts/send_data_medblast.py -d /tmp/dataset_simulated_100k.tsv -token seu_token <span class="copy-icon" onclick="copyToClipboard('docker exec -it med_blast python scripts/med_blast_batch.py -d /tmp/dataset_simulated.tsv -batch 10000 -token')"><i class="fas fa-copy"></i></span></code></pre>
+              <pre><code class="copy-icon-container">docker exec -it med_blast python scripts/send_data_medblast.py -d /tmp/dataset_simulated_10k.tsv -token seu_token <span class="copy-icon" onclick="copyToClipboard('docker exec -it med_blast python scripts/send_data_medblast.py -d /tmp/dataset_simulated_10k.tsv -token seu_token')"><i class="fas fa-copy"></i></span></code></pre>
             </li>
           </ol>
         </li>
@@ -134,7 +134,7 @@ curl --location 'http://127.0.0.1:8080/api/v1/usuarios/signup' \
         </li>
         <p>Para ver os logs, execute:</p>
         <pre><code>
-docker exec -it med_blast cat /tmp/dataset_simulated_100k_processed.log > processed.log
+docker exec -it med_blast cat /tmp/dataset_simulated_10k_processed.log > processed.log
                 </code></pre>
         <li>
           Comandos gerais de gerenciamento:
